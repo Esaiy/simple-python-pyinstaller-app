@@ -15,14 +15,14 @@ node {
     }
     stage('Deploy') {
         try {
-            docker.image('cdrx/pyinstaller-linux:python2').inside() {
+            docker.image('cdrx/pyinstaller-linux:python2').inside('-d') {
                 sh 'pyinstaller --onefile sources/add2vals.py'
                 archiveArtifacts 'dist/add2vals'
             }
         } catch(Exception e) {
-                echo e.toString()
+            echo e.toString()
         } finally {
-            sleep 1 MINUTESS
+            sleep 1 MINUTES
             // run add2vals in docker
 
             // upload to s3
