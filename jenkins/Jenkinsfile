@@ -22,7 +22,7 @@ node {
         } catch(Exception e) {
             echo e.toString()
         } finally {
-            sleep 1 minutes
+            sleep 1 MINUTESS
             // run add2vals in docker
 
             // upload to s3
