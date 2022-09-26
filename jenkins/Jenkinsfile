@@ -15,4 +15,23 @@ node {
             junit 'test-reports/results.xml'
         }
     }
+    stage('Manual Approval') {
+        input 'Do you want to deploy?'
+    }
+    // stage('Deploy') {
+    //     try {
+    //         docker.image('cdrx/pyinstaller-linux:python2').inside {
+    //             sh 'pyinstaller --onefile sources/add2vals.py'
+    //         }
+    //     } catch(Exception e) {
+    //         echo 'Something failed'
+    //     } finally {
+    //         archiveArtifacts 'dist/add2vals'
+    //         time
+    //         run add2vals in docker
+
+    //         upload to s3
+    //         code deploy to ec2
+    //     }
+    // }
 }
