@@ -15,8 +15,9 @@ node {
     }
     stage('Deploy') {
         try {
-            docker.image('cdrx/pyinstaller-linux:python2').inside('-it --entrypoint=/bin/bash') {
-                sh 'pyinstaller --onefile sources/add2vals.py'
+            docker.image('cdrx/pyinstaller-linux:python2').inside('-v $HOME/dicoding/dev-ops-inter/sub2/simple-python-pyinstaller-app:/src/') {
+                sh 'echo pwd'
+                sh 'pyinstaller --onefile /src/add2vals.py'
                 archiveArtifacts 'dist/add2vals'
             }
         } catch(Exception e) {
