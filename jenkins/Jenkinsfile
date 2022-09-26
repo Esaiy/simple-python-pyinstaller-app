@@ -1,34 +1,26 @@
 node {
-    // stage('Build') {
-    //     docker.image('python:2-alpine').inside {
-    //         sh 'python -m py_compile sources/add2vals.py sources/calc.py'
-    //     }
-    // }
-    // stage('Test') {
-    //     docker.image('qnib/pytest').inside {
-    //         sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
-    //         junit 'test-reports/results.xml'
-    //     }
-    // }
-    // stage('Manual Approval') {
-    //     input 'Do you want to deploy?'
-    // }
+    stage('Build') {
+        docker.image('python:2-alpine').inside {
+            sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+        }
+    }
+    stage('Test') {
+        docker.image('qnib/pytest').inside {
+            sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+            junit 'test-reports/results.xml'
+        }
+    }
+    stage('Manual Approval') {
+        input 'Do you want to deploy?'
+    }
     stage('Deploy') {
         try {
             sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "pyinstaller --onefile /src/add2vals.py"'
             archiveArtifacts 'sources/dist/add2vals'
-            // docker.image('cdrx/pyinstaller-linux:python2').inside('--entrypoint=""') {
-            //     sh 'pyinstaller --onefile sources/add2vals.py'
-            //     archiveArtifacts 'dist/add2vals'
-            // }
         } catch(Exception e) {
             echo e.toString()
         } finally {
-            sleep 1
-            // run add2vals in docker
-
-            // upload to s3
-            // code deploy to ec2
+            sleep 60
         }
     }
 }
