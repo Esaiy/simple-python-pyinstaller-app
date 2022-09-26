@@ -25,6 +25,7 @@ node {
             }
         } catch(Exception e) {
             echo 'Something failed'
+            echo e
         } finally {
             archiveArtifacts 'dist/add2vals'
             sleep 1 minutes
