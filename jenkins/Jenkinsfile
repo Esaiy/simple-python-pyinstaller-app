@@ -20,6 +20,7 @@ node {
         } catch(Exception e) {
             echo e.toString()
         } finally {
+            sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "rm -rf build dist"'
             sleep 60
         }
     }
