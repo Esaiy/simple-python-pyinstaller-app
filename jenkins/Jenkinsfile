@@ -27,12 +27,12 @@ node {
             archiveArtifacts 'sources/dist/add2vals'
 
             sshPut remote: remote, from: 'sources/dist/add2vals', into: '.'
-            sshCommand remote: remote, command: 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "add2vals 3 3"'
+            sshCommand remote: remote, command: 'sudo docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "add2vals 3 3"'
         } catch(Exception e) {
             echo e.toString()
         } finally {
             // sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "rm -rf build dist"'
-            sleep 1
+            sleep 60
         }
     }
 }
