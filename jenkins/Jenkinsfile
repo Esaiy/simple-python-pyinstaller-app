@@ -25,9 +25,10 @@ node {
         try {
             sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "pyinstaller --onefile /src/add2vals.py"'
             archiveArtifacts 'sources/dist/add2vals'
-            sh 'chmod +x sources/dist/add2vals'
 
             // sshPut remote: remote, from: 'sources/dist/add2vals', into: '.'
+
+            sshCommand remote: remote, command: 'chmod +x add2vals', sudo: true
             sshCommand remote: remote, command: 'docker run -v "/home/ubuntu:/src" alpine:3.14 "sudo /src/add2vals 3 3"', sudo: true
         } catch(Exception e) {
             echo e.toString()
