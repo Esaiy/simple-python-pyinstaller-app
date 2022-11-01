@@ -33,7 +33,7 @@ node {
             echo e.toString()
         } finally {
             // sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "rm -rf build dist"'
-            sleep 60
+            sleep 1
         }
     }
 }
