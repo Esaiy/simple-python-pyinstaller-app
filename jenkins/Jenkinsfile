@@ -15,14 +15,24 @@ node {
         input 'Do you want to deploy?'
     }
     stage('Deploy') {
+        def remote = [:]
+        remote.name = "node"
+        remote.host = "ec2-54-145-30-117.compute-1.amazonaws.com"
+        remote.user = "ubuntu"
+        remote.identityFile = "/home/key2.pem"
+        remote.allowAnyHosts = true
+
         try {
             sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "pyinstaller --onefile /src/add2vals.py"'
             archiveArtifacts 'sources/dist/add2vals'
+
+            sshPut remote: remote, from: 'sources/dist/add2vals' into: '.'
+            sshCommand remote: remote, command: 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "add2vals 3 3"'
         } catch(Exception e) {
             echo e.toString()
         } finally {
-            sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "rm -rf build dist"'
-            sleep 60
+            // sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "rm -rf build dist"'
+            sleep 1
         }
     }
 }
