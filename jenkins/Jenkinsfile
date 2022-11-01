@@ -1,6 +1,7 @@
 node {
     stage('Build') {
         docker.image('python:2-alpine').inside('-v /home/dicoding/dev-ops-inter/sub2/simple-python-pyinstaller-app:/source') {
+            sh 'ls /'
             sh 'python -m py_compile /source/add2vals.py /source/calc.py'
         }
     }
