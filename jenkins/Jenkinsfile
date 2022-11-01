@@ -14,15 +14,15 @@ node {
     stage('Manual Approval') {
         input 'Do you want to deploy?'
     }
-    stage('Deploy') {
-        try {
-            sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "pyinstaller --onefile /src/add2vals.py"'
-            archiveArtifacts 'sources/dist/add2vals'
-        } catch(Exception e) {
-            echo e.toString()
-        } finally {
-            sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "rm -rf build dist"'
-            sleep 60
-        }
-    }
+    // stage('Deploy') {
+    //     try {
+    //         sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "pyinstaller --onefile /src/add2vals.py"'
+    //         archiveArtifacts 'sources/dist/add2vals'
+    //     } catch(Exception e) {
+    //         echo e.toString()
+    //     } finally {
+    //         sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "rm -rf build dist"'
+    //         sleep 60
+    //     }
+    // }
 }
