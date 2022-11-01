@@ -26,7 +26,7 @@ node {
             sh 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "pyinstaller --onefile /src/add2vals.py"'
             archiveArtifacts 'sources/dist/add2vals'
 
-            sshPut remote: remote, from: 'sources/dist/add2vals' into: '.'
+            sshPut remote: remote, from: 'sources/dist/add2vals', into: '.'
             sshCommand remote: remote, command: 'docker run -v "$(pwd)/sources:/src/" cdrx/pyinstaller-linux:python2 "add2vals 3 3"'
         } catch(Exception e) {
             echo e.toString()
