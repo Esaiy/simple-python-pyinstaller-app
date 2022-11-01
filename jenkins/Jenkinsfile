@@ -27,7 +27,7 @@ node {
             archiveArtifacts 'sources/dist/add2vals'
 
             sshPut remote: remote, from: 'sources/dist/add2vals', into: '.'
-            sshCommand remote: remote, command: 'docker run -v "$(pwd):/src" cdrx/pyinstaller-linux:python2 "/src/add2vals 3 3"', sudo: true
+            sshCommand remote: remote, command: 'docker run -v "$(pwd):/src" alpine:3.14 "/src/add2vals 3 3"', sudo: true
         } catch(Exception e) {
             echo e.toString()
         } finally {
